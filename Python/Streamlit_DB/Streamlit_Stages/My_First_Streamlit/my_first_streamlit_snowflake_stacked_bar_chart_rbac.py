@@ -21,9 +21,15 @@ def open_session():
       snow_session = get_active_session()
     except:
       #READ CREDS INTO DICTIONARY
-        with open("../../../credentials.json") as jsonfile:
-            creds = json.load(jsonfile)
-            jsonfile.close()
+        creds = {
+            "account":"YHPYIYV-LGB12838",
+            "user":"eheilman",
+            "password":"qbJo38V4xIQ-1p",    
+            "database":"STREAMLIT_DB",
+            "schema":"STREAMLIT_DATA",
+            "role":"SALES_MGR",
+            "warehouse":"ST_DEMO_XS_WH"
+        }        
         #BUILD SESSION
         snow_session = sp.Session.builder.configs(creds).create()
 
