@@ -1,17 +1,55 @@
 #IMPORT STREAMLIT LIBRARY
 import streamlit as st
+#IMPORT SNOWPARK
+import snowflake.snowpark as sp
+#IMPORT JSON
+import json
 #IMPORT SNOWPARK SESSION
 from snowflake.snowpark.context import get_active_session
 #IMPORT PANDAS
 import pandas as pd
 #IMPORT ALTAIR CHARTS
 import altair as alt
- 
+
+
+##CREATE NEW FUNCTION TO TRY GET ACTIVE SESSION FROM SNOWPARK
+##OTHERWISE BUILD CONNECTION
+def open_session():
+    snow_session = None
+
+    try:
+      snow_session = get_active_session()
+    except:
+      #READ CREDS INTO DICTIONARY
+        with open("../../../credentials.json") as jsonfile:
+            creds = json.load(jsonfile)
+            jsonfile.close()
+        #BUILD SESSION
+        snow_session = sp.Session.builder.configs(creds).create()
+
+    return snow_session
+
+def get_roles():
+    role_sql ="""
+    SELECT REPLACE(VALUE,'"','') AS ROLE_NAME
+    FROM TABLE(FLATTEN(input => PARSE_JSON(CURRENT_AVAILABLE_ROLES())))
+    WHERE VALUE LIKE '%SALES%' AND VALUE != 'SNOW_SALES'
+    ORDER BY VALUE
+    """
+    role_df = session.sql(role_sql).collect()
+    current_role = st.selectbox("Choose a role:",options=role_df)
+    session.use_role(current_role)
+
 #CREATE A SESSION VARIABLE
-session = get_active_session()
+#session = get_active_session()
+session = open_session()
  
 #UPDATE THE PAGE CONFIG SETTINGS
 st.set_page_config(layout="wide")
+
+#ADD ROLE CHOOSER TO SIDEBAR
+with st.sidebar:
+    get_roles()
 
 ##ADD SOME COLUMNS FOR SELECTION BOXES
 col1,col2 = st.columns(2)
@@ -81,11 +119,12 @@ with r2col1:
     st.dataframe(data=bar_pandas_df)
 with r2col2:
    #STEP 5: CREATE THE CHART
-    st.subheader("Total Sales (in Millions) by Year")
-   #CREATE THE ALTAIR CHART DATA
+    st.subheader("Total Sales (in Millions) by Year") 
+    #CREATE THE ALTAIR CHART DATA
     chart = alt.Chart(bar_pandas_df).mark_bar().encode(
-        x = alt.X("ORDER_YEAR",title="ORDER YEAR",type="nominal")
-       ,y=alt.Y("SALES_IN_MILLIONS",title="SALES IN MILLIONS")
-        ,color= alt.Color("PART_MFG",title="PARTS MANUFACTURER")
-    )
+            x = alt.X("ORDER_YEAR",title="ORDER YEAR",type="nominal")
+        ,y=alt.Y("SALES_IN_MILLIONS",title="SALES IN MILLIONS")
+            ,color= alt.Color("PART_MFG",title="PARTS MANUFACTURER")
+        )
+    
     st.altair_chart(chart,use_container_width=True,theme="streamlit")
