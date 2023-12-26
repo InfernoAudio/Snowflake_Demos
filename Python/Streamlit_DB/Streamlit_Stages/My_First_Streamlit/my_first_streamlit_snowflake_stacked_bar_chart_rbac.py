@@ -22,9 +22,9 @@ def open_session():
     except:
       #READ CREDS INTO DICTIONARY
         creds = {
-            "account":"YHPYIYV-LGB12838",
-            "user":"eheilman",
-            "password":"qbJo38V4xIQ-1p",    
+            "account":"YOUR_ACCOUNT_LOCATOR",
+            "user":"USERNAME",
+            "password":"PASSWORD",    
             "database":"STREAMLIT_DB",
             "schema":"STREAMLIT_DATA",
             "role":"SALES_MGR",
