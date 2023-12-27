@@ -2,8 +2,6 @@
 import streamlit as st
 #IMPORT SNOWPARK
 import snowflake.snowpark as sp
-#IMPORT JSON
-import json
 #IMPORT SNOWPARK SESSION
 from snowflake.snowpark.context import get_active_session
 #IMPORT PANDAS
