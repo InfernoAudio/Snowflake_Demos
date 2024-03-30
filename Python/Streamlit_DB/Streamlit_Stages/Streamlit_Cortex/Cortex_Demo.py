@@ -84,6 +84,8 @@ def cortex_summarize(text):
     return summ_txt
 
 #START APP
+#ADD SNOWFLAKE LOGO
+st.image(image="https://www.snowflake.com/wp-content/themes/snowflake/assets/img/brand-guidelines/logo-sno-blue-example.svg")
 st.header("Snowflake Cortex Demo")
 
 #SET TABS
