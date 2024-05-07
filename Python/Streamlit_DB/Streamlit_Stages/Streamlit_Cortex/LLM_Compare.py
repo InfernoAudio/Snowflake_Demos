@@ -9,14 +9,14 @@ st.set_page_config(page_title="Snowflake LLM Comparisons",layout="wide")
 
 #READ CREDS INTO DICTIONARY
 creds = {
-    "account":"VUBNCZT-FHB72965",
-    "user":"EHEILMAN",
-    "password":"eu.OYz60qNp6C3",    
-    "database":"ST_DEMO_DB",
-    "schema":"RAW_DATA",
-    "role":"ST_DEMO_ROLE",
-    "warehouse":"ST_DEMO_XS_WH"
-}        
+        "account":"YOUR ACCOUNT",
+        "user":"YOUR USERNAME",
+        "password":"YOUR PASSWORD",    
+        "database":"YOUR DB",
+        "schema":"YOUR SCHEMA",
+        "role":"YOUR ROLE",
+        "warehouse":"YOUR WAREHOUSE"
+    }             
 
 #CREATE LLM OPTIONS
 llm_models = ["snowflake-arctic",
