@@ -8,15 +8,15 @@ from snowflake.cortex import Complete
 st.set_page_config(page_title="Snowflake LLM Comparisons",layout="wide")
 
 #READ CREDS INTO DICTIONARY
-creds = {
-        "account":"YOUR ACCOUNT",
-        "user":"YOUR USERNAME",
-        "password":"YOUR PASSWORD",    
-        "database":"YOUR DB",
-        "schema":"YOUR SCHEMA",
-        "role":"YOUR ROLE",
-        "warehouse":"YOUR WAREHOUSE"
-    }             
+creds = creds = {
+            "account":"YOUR ACCOUNT",
+            "user":"YOUR USERNAME",
+            "password":"YOUR PASSWORD",    
+            "database":"YOUR DB",
+            "schema":"YOUR SCHEMA",
+            "role":"YOUR ROLE",
+            "warehouse":"YOUR WAREHOUSE"
+        }            
 
 #CREATE LLM OPTIONS
 llm_models = ["snowflake-arctic",
@@ -70,7 +70,7 @@ while x < cntLlm:
             st.chat_message("user").markdown(prompt)
             st.session_state[chatHist].append({"role":"user","content":prompt})
             with st.chat_message("assistant"):                
-                resp = Complete(llm[x],prompt,session)                          
+                resp = Complete(llm[x],prompt,session) 
                 st.markdown(resp)
                 st.session_state[chatHist].append({"role":"assistant","content":resp})
     x+=1
